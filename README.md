@@ -36,6 +36,39 @@ src/
     utils/
 ```
 
+### Data flow diagram
+
+```mermaid
+flowchart TD
+    subgraph Page
+        P[Page Component]
+    end
+
+    subgraph Domain
+        direction TB
+        Q[queries/]
+        C[commands/]
+        S[model/ — Pinia Store]
+    end
+
+    subgraph Infra
+        DS[(Data Source)]
+    end
+
+    P -- user action --> C
+    C -- mutate --> DS
+    C -- invalidate cache --> Q
+    Q -- fetch --> DS
+    Q -- hydrate --> S
+    S -- storeToRefs --> P
+
+    style Page fill:#42b883,color:#fff
+    style Q fill:#3b82f6,color:#fff
+    style C fill:#ef4444,color:#fff
+    style S fill:#a855f7,color:#fff
+    style DS fill:#64748b,color:#fff
+```
+
 ### How it flows (CQRS)
 
 **Read path** — `queries/` use TanStack Query to fetch data and hydrate the Pinia store.
