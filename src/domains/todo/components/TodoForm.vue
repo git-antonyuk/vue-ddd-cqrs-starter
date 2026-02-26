@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const emit = defineEmits<{
-  add: [title: string];
-}>();
+  add: [title: string]
+}>()
 
-const title = ref("");
+const title = ref('')
 
-const submit = () => {
-  const value = title.value.trim();
+function submit() {
+  const value = title.value.trim()
   if (!value) {
-    return;
+    return
   }
 
-  emit("add", value);
-  title.value = "";
-};
+  emit('add', value)
+  title.value = ''
+}
 </script>
 
 <template>

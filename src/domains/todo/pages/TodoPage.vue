@@ -1,52 +1,56 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { onBeforeUnmount, watch } from "vue";
-import TodoForm from "@/domains/todo/components/TodoForm.vue";
-import TodoList from "@/domains/todo/components/TodoList.vue";
-import { useAddTodoMutation } from "@/domains/todo/commands/addTodo";
-import { useRemoveTodoMutation } from "@/domains/todo/commands/removeTodo";
-import { useToggleTodoMutation } from "@/domains/todo/commands/toggleTodo";
-import { useTodoStore } from "@/domains/todo/model/todoStore";
-import { useTodoListQuery } from "@/domains/todo/queries/getTodos";
+import { storeToRefs } from 'pinia'
+import { onBeforeUnmount, watch } from 'vue'
+import { useAddTodoMutation } from '@/domains/todo/commands/addTodo'
+import { useRemoveTodoMutation } from '@/domains/todo/commands/removeTodo'
+import { useToggleTodoMutation } from '@/domains/todo/commands/toggleTodo'
+import TodoForm from '@/domains/todo/components/TodoForm.vue'
+import TodoList from '@/domains/todo/components/TodoList.vue'
+import { useTodoStore } from '@/domains/todo/model/todoStore'
+import { useTodoListQuery } from '@/domains/todo/queries/getTodos'
 
-const todoStore = useTodoStore();
-const { filter, search, filteredItems } = storeToRefs(todoStore);
+const todoStore = useTodoStore()
+const { filter, search, filteredItems } = storeToRefs(todoStore)
 
-const todoListQuery = useTodoListQuery();
-const addTodoMutation = useAddTodoMutation();
-const toggleTodoMutation = useToggleTodoMutation();
-const removeTodoMutation = useRemoveTodoMutation();
+const todoListQuery = useTodoListQuery()
+const addTodoMutation = useAddTodoMutation()
+const toggleTodoMutation = useToggleTodoMutation()
+const removeTodoMutation = useRemoveTodoMutation()
 
 watch(
   () => todoListQuery.data.value,
   (items) => {
-    todoStore.setItems(items ?? []);
+    todoStore.setItems(items ?? [])
   },
   { immediate: true },
-);
+)
 
-const addTodo = async (title: string) => {
-  await addTodoMutation.mutateAsync(title);
-};
+async function addTodo(title: string) {
+  await addTodoMutation.mutateAsync(title)
+}
 
-const toggleTodo = async (id: string) => {
-  await toggleTodoMutation.mutateAsync(id);
-};
+async function toggleTodo(id: string) {
+  await toggleTodoMutation.mutateAsync(id)
+}
 
-const removeTodo = async (id: string) => {
-  await removeTodoMutation.mutateAsync(id);
-};
+async function removeTodo(id: string) {
+  await removeTodoMutation.mutateAsync(id)
+}
 
 onBeforeUnmount(() => {
-  todoStore.$reset();
-});
+  todoStore.$reset()
+})
 </script>
 
 <template>
   <main class="mx-auto max-w-3xl p-6">
     <Card>
-      <template #title>Todo List</template>
-      <template #subtitle>LocalStorage + Pinia + TanStack Query</template>
+      <template #title>
+        Todo List
+      </template>
+      <template #subtitle>
+        LocalStorage + Pinia + TanStack Query
+      </template>
       <template #content>
         <div class="space-y-4">
           <TodoForm @add="addTodo" />
@@ -86,7 +90,9 @@ onBeforeUnmount(() => {
             @toggle="toggleTodo"
             @remove="removeTodo"
           />
-          <Message v-else severity="info" :closable="false">No todos found.</Message>
+          <Message v-else severity="info" :closable="false">
+            No todos found.
+          </Message>
         </div>
       </template>
     </Card>

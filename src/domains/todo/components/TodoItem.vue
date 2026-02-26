@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { TodoItem as Todo } from "@/domains/todo/model/types";
+import type { TodoItem as Todo } from '@/domains/todo/model/types'
 
 defineProps<{
-  item: Todo;
-}>();
+  item: Todo
+}>()
 
 const emit = defineEmits<{
-  toggle: [id: string];
-  remove: [id: string];
-}>();
+  toggle: [id: string]
+  remove: [id: string]
+}>()
 </script>
 
 <template>

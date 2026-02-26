@@ -1,21 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/vue-query";
-import { todoQueryKey } from "@/domains/todo/queries/getTodos";
-import { loadTodoItems, saveTodoItems } from "@/domains/todo/utils/todoStorage";
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { todoQueryKey } from '@/domains/todo/queries/getTodos'
+import { loadTodoItems, saveTodoItems } from '@/domains/todo/utils/todoStorage'
 
-export const useToggleTodoMutation = () => {
-  const queryClient = useQueryClient();
+export function useToggleTodoMutation() {
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const currentItems = loadTodoItems();
-      const nextItems = currentItems.map((item) =>
+      const currentItems = loadTodoItems()
+      const nextItems = currentItems.map(item =>
         item.id === id ? { ...item, completed: !item.completed } : item,
-      );
-      saveTodoItems(nextItems);
-      return nextItems;
+      )
+      saveTodoItems(nextItems)
+      return nextItems
     },
     onSuccess: (nextItems) => {
-      queryClient.setQueryData(todoQueryKey, nextItems);
+      queryClient.setQueryData(todoQueryKey, nextItems)
     },
-  });
-};
+  })
+}

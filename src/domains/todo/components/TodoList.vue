@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import TodoItem from "@/domains/todo/components/TodoItem.vue";
-import type { TodoItem as Todo } from "@/domains/todo/model/types";
+import type { TodoItem as Todo } from '@/domains/todo/model/types'
+import TodoItem from '@/domains/todo/components/TodoItem.vue'
 
 defineProps<{
-  items: Todo[];
-}>();
+  items: Todo[]
+}>()
 
 const emit = defineEmits<{
-  toggle: [id: string];
-  remove: [id: string];
-}>();
+  toggle: [id: string]
+  remove: [id: string]
+}>()
 </script>
 
 <template>
